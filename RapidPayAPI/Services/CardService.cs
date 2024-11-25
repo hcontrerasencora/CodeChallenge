@@ -19,6 +19,8 @@ namespace RapidPayAPI.Services
 
         public int CreateCard(CreateCardRequest createCardRequest)
         {
+            //TODO: Validate that expiration info is not in the past. Validate that the card does not exists already. 
+
             // We should never store credit card information, instead we will tokeize the card and store the token.
             // We sill use Stripe, lookup for testing card at https://docs.stripe.com/testing#cards
             var cardToken = cardTokenService.CreateToken(createCardRequest);
@@ -44,6 +46,8 @@ namespace RapidPayAPI.Services
 
         public int Pay(PayRequest payRequest)
         {
+            //TODO: Validate that the card has balance.
+
             int paymentId;
             using (var dbContextTransaction = dataContext.Database.BeginTransaction())
             {
